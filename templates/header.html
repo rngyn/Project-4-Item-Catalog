@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="EN">
+
+	<head>
+		<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+		<link rel=stylesheet type=text/css
+			href="{{ url_for('static', filename='style.css') }}">
+		<link rel=stylesheet type=text/css
+			href="{{ url_for('static', filename='siimple.css') }}">
+		<title>Lens Catalog</title>
+	</head>
+
+	<body>
+		<div class="siimple-navbar siimple-navbar--orange siimple-navbar--fluid">
+			<div class="siimple-layout--left">
+				<a href="/" class="siimple-navbar-title">Lens Catalog</a>
+			</div>
+
+			<div class="siimple-layout--right">
+				{%if 'username' not in session %}
+					<a href="{{url_for('login')}}" class="siimple-navbar-link">Login</a>
+				{% else %}
+					<a href="{{url_for('logout')}}" class="siimple-navbar-link">Logout</a>
+				{% endif %}
+			</div>
+		</div>
+
+		<div class="container siimple-content">
+			{% block content %}
+
+			{% endblock %}
+		</div>
+	</body>
+
+</html>

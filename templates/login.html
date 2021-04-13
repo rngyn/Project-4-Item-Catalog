@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="EN">
+	<head>
+		<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+		<link rel=stylesheet type=text/css
+			href="{{ url_for('static', filename='style.css') }}">
+		<link rel=stylesheet type=text/css
+			href="{{ url_for('static', filename='siimple.css') }}">
+		<title>Lens Catalog Login</title>
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+		<script src="//apis.google.com/js/platform.js?onload=start"></script>
+	</head>
+
+	<body>
+		<script>
+		function signInCallback(authResult) {
+			if (authResult['code']) {
+				// Hide the sign-in button now that the user is authorized
+				$('#signinButton').attr('style', 'display: none');
+				// Send the one-time-use code to the server, if the server responds, write a 'login successful' message to the web page and then redirect back to the main page
+				$.ajax({
+					type: 'POST',
+					url: '/gconnect?state={{STATE}}',
+					processData: false,
+					data: authResult['code'],
+					contentType: 'application/octet-stream; charset=utf-8',
+					success: function(result) {
+						// Handle or verify the server response if necessary.
+						if (result) {
+							$('#gresult').html('<div class="siimple-spinner siimple-spinner--blue"></div><br>')
+						 setTimeout(function() {
+							window.location.href = "/catalog";
+						}, 3000);
+
+					} else if (authResult['error']) {
+				console.log('There was an error: ' + authResult['error']);
+			} else {
+						$('#gresult').html('Failed to make a server-side call. Check your configuration and console.');
+						 }
+					}
+
+			}); } }
+		</script>
+
+		<script>
+		  window.fbAsyncInit = function() {
+		  FB.init({
+		    appId      : '177319123048194',
+		    cookie     : true,  // enable cookies to allow the server to access
+		                        // the session
+		    xfbml      : true,  // parse social plugins on this page
+		    version    : 'v2.8' // use version 2.8
+		  });
+		  };
+		  // Load the SDK asynchronously
+		  (function(d, s, id) {
+		    var js, fjs = d.getElementsByTagName(s)[0];
+		    if (d.getElementById(id)) return;
+		    js = d.createElement(s); js.id = id;
+		    js.src = "https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.12&appId=177319123048194&autoLogAppEvents=1";
+		    fjs.parentNode.insertBefore(js, fjs);
+		  }(document, 'script', 'facebook-jssdk'));
+		  // Here we run a very simple test of the Graph API after login is
+		  // successful.  See statusChangeCallback() for when this call is made.
+		  function sendTokenToServer() {
+		    var access_token = FB.getAuthResponse()['accessToken'];
+		    console.log(access_token)
+		    console.log('Welcome!  Fetching your information.... ');
+		    FB.api('/me', function(response) {
+		      console.log('Successful login for: ' + response.name);
+		     $.ajax({
+		      type: 'POST',
+		      url: '/fbconnect?state={{STATE}}',
+		      processData: false,
+		      data: access_token,
+		      contentType: 'application/octet-stream; charset=utf-8',
+		      success: function(result) {
+		        // Handle or verify the server response if necessary.
+		        if (result) {
+		          $('#fbresult').html('<br><div class="siimple-spinner siimple-spinner--blue"></div>')
+		         setTimeout(function() {
+		          window.location.href = "/catalog";
+						}, 3000);
+		      } else {
+		        $('#fbresult').html('Failed to make a server-side call. Check your configuration and console.');
+		         }
+		      }
+		  });
+		    });
+		  }
+		</script>
+
+		<div class="siimple-navbar siimple-navbar--orange siimple-navbar--fluid">
+			<div class="siimple-layout--left">
+				<a href="/" class="siimple-navbar-title">Lens Catalog</a>
+			</div>
+		</div>
+
+		<div class="container siimple-content">
+			<div class="siimple-box siimple-box--white">
+				<div class="siimple-box-subtitle">Login</div>
+			</div>
+
+			<div class="siimple-grid">
+				<div class="siimple-grid-row">
+					<div class="siimple-grid-col siimple-grid-col--12">
+						<div id="signinButton">
+							<span class="g-signin"
+								data-scope="openid email"
+								data-clientid="862058248456-2go27m2gkb2q5s6spjq6qv1e8p9g64fs.apps.googleusercontent.com"
+								data-redirecturi="postmessage"
+								data-accesstype="offline"
+								data-cookiepolicy="single_host_origin"
+								data-callback="signInCallback"
+								data-approvalprompt="force">
+							</span>
+						</div>
+						<div id="gresult"></div>
+					</div>
+	  		</div>
+
+				<div class="siimple-grid-row">
+	    		<div class="siimple-grid-col siimple-grid-col--12">
+						<div class="login-divider">or</div>
+					</div>
+	  		</div>
+				<div class="siimple-grid-row">
+	    		<div class="siimple-grid-col siimple-grid-col--12">
+						<a href='javascript:sendTokenToServer()'>
+							<div class="fb-login-button"
+								data-max-rows="1"
+								data-size="medium"
+								data-button-type="continue_with"
+								data-show-faces="false"
+								data-auto-logout-link="false"
+								data-use-continue-as="false"
+								scope="public_profile,email"
+								onlogin="sendTokenToServer();">
+							</div>
+						</a>
+						<div id="fbresult"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="siimple-footer" align="center">
+			<a href="/">
+				<div class="siimple-close"></div>
+			</a>
+		</div>
+	</body>
+
+</html>

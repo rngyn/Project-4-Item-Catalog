@@ -1,0 +1,73 @@
+.container {
+	margin: auto;
+	width: 50%;
+	max-width: 120rem;
+  text-align: center;
+}
+
+.wrapper {
+	margin: auto;
+	width: 50%;
+	max-width: 40rem;
+}
+
+.add-item {
+	padding-top: 30px;
+	margin-top: 30px;
+}
+
+.separator {
+	margin-top: 40px;
+}
+
+.login-divider {
+	margin-bottom: 12px;
+}
+
+.lens-name {
+	width: 300px;
+}
+
+.lens-description {
+	width: 400px;
+	height: 150px;
+}
+
+.large-description {
+	width: 50%;
+	margin: auto;
+}
+
+.lens-submit {
+	margin-top: 65px;
+}
+
+.picture {
+	width:50%;
+}
+
+.item-box {
+	margin-bottom: 40px;
+}
+
+.main-picture {
+	width: 40%;
+	margin: 30px;
+}
+
+.buttons {
+	margin: auto;
+	width: 50%;
+	max-width: 20rem;
+}
+
+.picture-field {
+	width: 400px;
+}
+
+.dollar-sign {
+	font-size: 22px;
+	font-weight: bold;
+	color: #57607c;
+	vertical-align: middle
+}

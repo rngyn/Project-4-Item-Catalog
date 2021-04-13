@@ -1,0 +1,56 @@
+{% extends "header.html" %}
+
+{% block content %}
+
+<div class="separator"></div>
+<form action="#" method="post">
+	<div class="siimple-form">
+		<div class="siimple-form-title">Edit lens details</div>
+		<br>
+
+		<div class="siimple-form-field">
+			<div class="siimple-form-field-label">Lens name</div>
+			<input type="text" class="siimple-input lens-name" name="name" value="{{categoryItem.name}}" placeholder="Lens name" required>
+		</div>
+
+		<div class="siimple-form-field">
+			<div class="siimple-form-field-label">Description</div>
+			<textarea class="siimple-textarea lens-description" name="description" required>{{categoryItem.description}}</textarea>
+		</div>
+
+		<div class="siimple-form-field">
+			<div class="siimple-form-field-label">Picture URL</div>
+			<input type="text" class="siimple-input picture-field" name="picture" value="{{categoryItem.picture}}" required>
+		</div>
+
+		<div class="siimple-form-field">
+			<div class="siimple-form-field-label">Price</div>
+			<span class="dollar-sign">&#36; </span>
+			<input type="number" class="siimple-input" name="price" value="{{categoryItem.price}}" placeholder="USD" min="0" step="0.01" required>
+		</div>
+		<br>
+
+		<label class="siimple-label">Select lens mount: </label>
+		<select class="siimple-select" name="category">
+			{% for category in categories %}
+				{% if categoryItem.category_id == category.id %}
+					<option selected value="{{category.id}}">{{category.name}}</option>
+				{% else %}
+					<option value="{{category.id}}">{{category.name}}</option>
+				{% endif %}
+			{% endfor %}
+		</select>
+
+		<div class="siimple-form-field">
+			<input type="submit" class="siimple-btn siimple-btn--blue lens-submit" value="Save changes">
+		</div>
+	</div>
+</form>
+
+<div class="siimple-footer" align="center">
+	<a href="{{url_for('showCategoryItem', catalog_id = categoryItem.category_id ,item_id = categoryItem.id )}}">
+		<div class="siimple-close"></div>
+	</a>
+</div>
+
+{% endblock %}
