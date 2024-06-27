@@ -15,8 +15,6 @@ items that were not added themselves. In conclusion, this catalog utilizes
 * `database_setup.py` sets up required tables to be populated with items
 * `lensinit.py` contains a small list of lenses and details to populate tables
 * `project.py` is the actual application to run and brings everything together
-* `client_secrets.json` contains required credentials to run Google sign-in
-* `fb_client_secrets.json` contains required credentials to run Facebook sign-in
 * `static folder` contains .css files for page styling
 * `templates folder` contains .html webpage files for the catalog
 
